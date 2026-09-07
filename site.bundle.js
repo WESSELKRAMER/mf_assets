@@ -253,6 +253,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
+  const minSlidesForLoop = 6; // adjust based on testing
+  const originalSlides = Array.from(sliderEl.querySelectorAll('.team_slide'));
+
+  while (sliderEl.querySelectorAll('.team_slide').length < minSlidesForLoop) {
+    originalSlides.forEach((slide) => {
+      const clone = slide.cloneNode(true);
+      clone.setAttribute('data-team-slide-clone', '');
+      sliderEl.appendChild(clone);
+    });
+  }
+
   const updateActive = (slider) => {
     const activeIdx = slider.track.details.rel;
     sliderEl.querySelectorAll('.team_slide').forEach((slide, i) => {
@@ -261,12 +272,12 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
   };
 
   const slider = new KeenSlider(sliderEl, {
-    loop: false,
+    loop: true,
     centered: true,
-    slides: { perView: 2.75, spacing: 0 },
+    slides: { perView: 1.2, spacing: 0 },
     breakpoints: {
-      '(min-width: 768px)': { slides: { perView: 2.2, spacing: 0 } },
-      '(min-width: 1200px)': { slides: { perView: 2.75, spacing: 0 } }
+      '(min-width: 768px)': { slides: { perView: 1.6, spacing: 0 } },
+      '(min-width: 1200px)': { slides: { perView: 2, spacing: 0 } }
     },
     slideChanged: updateActive
   });
