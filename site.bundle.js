@@ -253,36 +253,42 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
-  const minSlidesForLoop = 6; // adjust based on testing
-  const originalSlides = Array.from(sliderEl.querySelectorAll('.team_slide'));
+  const updateActive = () => {
+    const containerRect = sliderEl.getBoundingClientRect();
+    const containerCenter = containerRect.left + containerRect.width / 2;
 
-  while (sliderEl.querySelectorAll('.team_slide').length < minSlidesForLoop) {
-    originalSlides.forEach((slide) => {
-      const clone = slide.cloneNode(true);
-      clone.setAttribute('data-team-slide-clone', '');
-      sliderEl.appendChild(clone);
+    let closestSlide = null;
+    let closestDistance = Infinity;
+
+    sliderEl.querySelectorAll('.team_slide').forEach((slide) => {
+      const slideRect = slide.getBoundingClientRect();
+      const slideCenter = slideRect.left + slideRect.width / 2;
+      const distance = Math.abs(slideCenter - containerCenter);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestSlide = slide;
+      }
     });
-  }
 
-  const updateActive = (slider) => {
-    const activeIdx = slider.track.details.rel;
-    sliderEl.querySelectorAll('.team_slide').forEach((slide, i) => {
-      slide.classList.toggle('is_active', i === activeIdx);
+    sliderEl.querySelectorAll('.team_slide').forEach((slide) => {
+      slide.classList.toggle('is_active', slide === closestSlide);
     });
   };
 
   const slider = new KeenSlider(sliderEl, {
     loop: true,
     centered: true,
-    slides: { perView: 3, spacing: 0 },
+    slides: { perView: 1.2, spacing: 0 },
     breakpoints: {
-      '(min-width: 768px)': { slides: { perView: 2.2, spacing: 0 } },
-      '(min-width: 1200px)': { slides: { perView: 3.2, spacing: 0 } }
+      '(min-width: 768px)': { slides: { perView: 1.6, spacing: 0 } },
+      '(min-width: 1280px)': { slides: { perView: 2.6, spacing: 0 } }
     },
-    slideChanged: updateActive
+    slideChanged: updateActive,
+    detailsChanged: updateActive
   });
 
-  updateActive(slider);
+  updateActive();
 });
 
 function initDynamicTextCursor() {
