@@ -260,7 +260,7 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
     });
   };
 
-  new KeenSlider(sliderEl, {
+  const slider = new KeenSlider(sliderEl, {
     loop: true,
     centered: true,
     slides: { perView: 1.2, spacing: 16 },
@@ -268,7 +268,8 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
       '(min-width: 768px)': { slides: { perView: 1.6, spacing: 24 } },
       '(min-width: 1200px)': { slides: { perView: 2, spacing: 32 } }
     },
-    slideChanged: updateActive,
-    created: updateActive
+    slideChanged: updateActive
   });
+
+  slider.on('created', updateActive);
 });
