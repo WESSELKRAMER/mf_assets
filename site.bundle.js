@@ -263,10 +263,10 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
   const slider = new KeenSlider(sliderEl, {
     loop: true,
     centered: true,
-    slides: { perView: 1.2, spacing: 16 },
+    slides: { perView: 2.5, spacing: 24 },
     breakpoints: {
-      '(min-width: 768px)': { slides: { perView: 1.6, spacing: 24 } },
-      '(min-width: 1200px)': { slides: { perView: 2, spacing: 32 } }
+      '(min-width: 768px)': { slides: { perView: 1.8, spacing: 24 } },
+      '(min-width: 1200px)': { slides: { perView: 2.5, spacing: 32 } }
     },
     slideChanged: updateActive
   });
