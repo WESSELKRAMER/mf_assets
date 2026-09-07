@@ -251,3 +251,24 @@ function initDraggableMarquee() {
 document.addEventListener("DOMContentLoaded", () => {
   initDraggableMarquee();
 });
+
+document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
+  const updateActive = (slider) => {
+    const activeIdx = slider.track.details.rel;
+    sliderEl.querySelectorAll('.team_slide').forEach((slide, i) => {
+      slide.classList.toggle('is_active', i === activeIdx);
+    });
+  };
+
+  new KeenSlider(sliderEl, {
+    loop: true,
+    centered: true,
+    slides: { perView: 1.2, spacing: 16 },
+    breakpoints: {
+      '(min-width: 768px)': { slides: { perView: 1.6, spacing: 24 } },
+      '(min-width: 1200px)': { slides: { perView: 2, spacing: 32 } }
+    },
+    slideChanged: updateActive,
+    created: updateActive
+  });
+});
