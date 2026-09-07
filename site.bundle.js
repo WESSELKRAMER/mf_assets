@@ -261,7 +261,7 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
   };
 
   const slider = new KeenSlider(sliderEl, {
-    loop: true,
+    loop: false,
     centered: true,
     slides: { perView: 2.75, spacing: 0 },
     breakpoints: {
