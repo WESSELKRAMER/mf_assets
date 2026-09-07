@@ -271,5 +271,5 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
     slideChanged: updateActive
   });
 
-  slider.on('created', updateActive);
+  updateActive(slider);
 });
