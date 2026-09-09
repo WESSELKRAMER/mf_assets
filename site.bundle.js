@@ -255,15 +255,14 @@ document.addEventListener("DOMContentLoaded", () => {
 document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
   const updateActive = () => {
     const containerRect = sliderEl.getBoundingClientRect();
-    const containerCenter = containerRect.left + containerRect.width / 2;
+    const containerLeft = containerRect.left;
 
     let closestSlide = null;
     let closestDistance = Infinity;
 
     sliderEl.querySelectorAll('.team_slide').forEach((slide) => {
       const slideRect = slide.getBoundingClientRect();
-      const slideCenter = slideRect.left + slideRect.width / 2;
-      const distance = Math.abs(slideCenter - containerCenter);
+      const distance = Math.abs(slideRect.left - containerLeft);
 
       if (distance < closestDistance) {
         closestDistance = distance;
