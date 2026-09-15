@@ -169,7 +169,7 @@ function initDraggableMarquee() {
     const list = wrapper.querySelector("[data-draggable-marquee-list]");
     if (!collection || !list) return;
 
-    const duration = getNumberAttr(wrapper, "data-duration", 20);
+    const duration = getNumberAttr(wrapper, "data-duration", 60);
     const multiplier = getNumberAttr(wrapper, "data-multiplier", 40);
     const sensitivity = getNumberAttr(wrapper, "data-sensitivity", 0.01);
 
