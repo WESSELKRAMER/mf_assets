@@ -137,20 +137,20 @@ document.querySelectorAll('[data-nav-theme]').forEach((section) => {
 });
 
 document.querySelectorAll('.floating_img_wrapper').forEach((el, i) => {
-  const distanceX = gsap.utils.random(40, 90);
-  const distanceY = gsap.utils.random(50, 110);
-  const rotation = gsap.utils.random(-8, 8);
-  const duration = gsap.utils.random(2.5, 6);
+  const distanceX = gsap.utils.random(6, 18);
+  const distanceY = gsap.utils.random(10, 26);
+  const rotation = gsap.utils.random(-2, 2);
+  const duration = gsap.utils.random(5, 8);
 
   gsap.to(el, {
     x: `+=${distanceX}`,
     y: `-=${distanceY}`,
-    rotation: rotation,
-    duration: duration,
+    rotation,
+    duration,
     ease: 'sine.inOut',
     repeat: -1,
     yoyo: true,
-    delay: i * 0.4
+    delay: i * 0.5
   });
 });
 
