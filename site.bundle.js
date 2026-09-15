@@ -137,13 +137,15 @@ document.querySelectorAll('[data-nav-theme]').forEach((section) => {
 });
 
 document.querySelectorAll('.floating_img_wrapper').forEach((el, i) => {
-  const distanceX = gsap.utils.random(8, 36);
-  const distanceY = gsap.utils.random(10, 40);
-  const duration = gsap.utils.random(3.5, 9.5);
+  const distanceX = gsap.utils.random(40, 90);
+  const distanceY = gsap.utils.random(50, 110);
+  const rotation = gsap.utils.random(-8, 8);
+  const duration = gsap.utils.random(2.5, 6);
 
   gsap.to(el, {
     x: `+=${distanceX}`,
     y: `-=${distanceY}`,
+    rotation: rotation,
     duration: duration,
     ease: 'sine.inOut',
     repeat: -1,
