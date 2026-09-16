@@ -254,18 +254,17 @@ document.addEventListener("DOMContentLoaded", () => {
   initDraggableMarquee();
 });
 
-function initKeenSlider(sliderEl, slideClass, options) {
+function initKeenSlider(sliderEl, options) {
   const wrapper = sliderEl.closest('[data-slider-wrapper]') || sliderEl.parentElement;
 
-  const updateActive = () => {
+  const updateActive = (instance) => {
     const containerRect = sliderEl.getBoundingClientRect();
     const containerLeft = containerRect.left;
 
     let closestSlide = null;
     let closestDistance = Infinity;
 
-    // slider.slides = Keen's own canonical slide list, real elements only, no loop clones
-    slider.slides.forEach((slide) => {
+    instance.slides.forEach((slide) => {
       const slideRect = slide.getBoundingClientRect();
       const distance = Math.abs(slideRect.left - containerLeft);
 
@@ -275,18 +274,17 @@ function initKeenSlider(sliderEl, slideClass, options) {
       }
     });
 
-    slider.slides.forEach((slide) => {
+    instance.slides.forEach((slide) => {
       slide.classList.toggle('is_active', slide === closestSlide);
     });
   };
 
   const slider = new KeenSlider(sliderEl, {
     ...options,
-    slideChanged: updateActive,
-    detailsChanged: updateActive
+    created: (s) => updateActive(s),
+    slideChanged: (s) => updateActive(s),
+    detailsChanged: (s) => updateActive(s)
   });
-
-  updateActive();
 
   const prevBtn = wrapper.querySelector('[data-slider-nav="prev"]');
   const nextBtn = wrapper.querySelector('[data-slider-nav="next"]');
@@ -296,7 +294,7 @@ function initKeenSlider(sliderEl, slideClass, options) {
 }
 
 document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
-  initKeenSlider(sliderEl, '.team_slide', {
+  initKeenSlider(sliderEl, {
     loop: true,
     centered: true,
     slides: { perView: 1.2, spacing: 0 },
@@ -308,7 +306,7 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
 });
 
 document.querySelectorAll('[data-project-slider]').forEach((sliderEl) => {
-  initKeenSlider(sliderEl, '.project_slide', {
+  initKeenSlider(sliderEl, {
     loop: false,
     centered: true,
     slides: { perView: 1.5, spacing: 0 },
