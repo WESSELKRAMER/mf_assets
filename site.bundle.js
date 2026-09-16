@@ -258,10 +258,24 @@ function initKeenSlider(sliderEl, options) {
   const wrapper = sliderEl.closest('[data-slider-wrapper]') || sliderEl.parentElement;
 
   const updateActive = (instance) => {
-    const activeIndex = instance.track.details.rel;
+    const containerRect = sliderEl.getBoundingClientRect();
+    const containerLeft = containerRect.left;
 
-    instance.slides.forEach((slide, i) => {
-      slide.classList.toggle('is_active', i === activeIndex);
+    let closestSlide = null;
+    let closestDistance = Infinity;
+
+    instance.slides.forEach((slide) => {
+      const slideRect = slide.getBoundingClientRect();
+      const distance = Math.abs(slideRect.left - containerLeft);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestSlide = slide;
+      }
+    });
+
+    instance.slides.forEach((slide) => {
+      slide.classList.toggle('is_active', slide === closestSlide);
     });
   };
 
@@ -283,7 +297,7 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
   initKeenSlider(sliderEl, {
     loop: true,
     centered: true,
-    slides: { perView: 1.05, spacing: 0 },
+    slides: { perView: 1.2, spacing: 0 },
     breakpoints: {
       '(min-width: 768px)': { slides: { perView: 1.6, spacing: 0 } },
       '(min-width: 1280px)': { slides: { perView: 2.6, spacing: 0 } }
@@ -295,7 +309,7 @@ document.querySelectorAll('[data-project-slider]').forEach((sliderEl) => {
   initKeenSlider(sliderEl, {
     loop: false,
     centered: true,
-    slides: { perView: 1.05, spacing: 0 },
+    slides: { perView: 1.5, spacing: 0 },
     breakpoints: {
       '(min-width: 768px)': { slides: { perView: 2.4, spacing: 0 } },
       '(min-width: 1280px)': { slides: { perView: 2.8, spacing: 0 } }
