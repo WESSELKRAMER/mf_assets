@@ -283,7 +283,7 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
   initKeenSlider(sliderEl, {
     loop: true,
     centered: true,
-    slides: { perView: 1.2, spacing: 0 },
+    slides: { perView: 1.05, spacing: 0 },
     breakpoints: {
       '(min-width: 768px)': { slides: { perView: 1.6, spacing: 0 } },
       '(min-width: 1280px)': { slides: { perView: 2.6, spacing: 0 } }
@@ -295,7 +295,7 @@ document.querySelectorAll('[data-project-slider]').forEach((sliderEl) => {
   initKeenSlider(sliderEl, {
     loop: false,
     centered: true,
-    slides: { perView: 1.5, spacing: 0 },
+    slides: { perView: 1.05, spacing: 0 },
     breakpoints: {
       '(min-width: 768px)': { slides: { perView: 2.4, spacing: 0 } },
       '(min-width: 1280px)': { slides: { perView: 2.8, spacing: 0 } }
