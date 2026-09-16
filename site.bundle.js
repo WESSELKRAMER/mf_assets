@@ -370,8 +370,8 @@ document.querySelectorAll('[data-project-slider]').forEach((sliderEl) => {
     centered: true,
     slides: { perView: 1.5, spacing: 0 },
     breakpoints: {
-      '(min-width: 768px)': { slides: { perView: 2.6, spacing: 0 } },
-      '(min-width: 1280px)': { slides: { perView: 3.6, spacing: 0 } }
+      '(min-width: 768px)': { slides: { perView: 2.4, spacing: 0 } },
+      '(min-width: 1280px)': { slides: { perView: 2.8, spacing: 0 } }
     },
     slideChanged: updateActive,
     detailsChanged: updateActive
