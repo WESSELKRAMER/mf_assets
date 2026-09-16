@@ -366,12 +366,12 @@ document.querySelectorAll('[data-project-slider]').forEach((sliderEl) => {
   };
 
   const slider = new KeenSlider(sliderEl, {
-    loop: true,
+    loop: false,
     centered: true,
-    slides: { perView: 1.2, spacing: 0 },
+    slides: { perView: 2.2, spacing: 0 },
     breakpoints: {
-      '(min-width: 768px)': { slides: { perView: 1.6, spacing: 0 } },
-      '(min-width: 1280px)': { slides: { perView: 2.6, spacing: 0 } }
+      '(min-width: 768px)': { slides: { perView: 2.6, spacing: 0 } },
+      '(min-width: 1280px)': { slides: { perView: 3.6, spacing: 0 } }
     },
     slideChanged: updateActive,
     detailsChanged: updateActive
