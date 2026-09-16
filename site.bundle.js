@@ -258,24 +258,10 @@ function initKeenSlider(sliderEl, options) {
   const wrapper = sliderEl.closest('[data-slider-wrapper]') || sliderEl.parentElement;
 
   const updateActive = (instance) => {
-    const containerRect = sliderEl.getBoundingClientRect();
-    const containerLeft = containerRect.left;
+    const activeIndex = instance.track.details.rel;
 
-    let closestSlide = null;
-    let closestDistance = Infinity;
-
-    instance.slides.forEach((slide) => {
-      const slideRect = slide.getBoundingClientRect();
-      const distance = Math.abs(slideRect.left - containerLeft);
-
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestSlide = slide;
-      }
-    });
-
-    instance.slides.forEach((slide) => {
-      slide.classList.toggle('is_active', slide === closestSlide);
+    instance.slides.forEach((slide, i) => {
+      slide.classList.toggle('is_active', i === activeIndex);
     });
   };
 
