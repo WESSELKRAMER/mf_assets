@@ -254,7 +254,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initDraggableMarquee();
 });
 
-document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
+function initKeenSlider(sliderEl, slideClass, options) {
+  const wrapper = sliderEl.closest('[data-slider-wrapper]') || sliderEl.parentElement;
+
   const updateActive = () => {
     const containerRect = sliderEl.getBoundingClientRect();
     const containerLeft = containerRect.left;
@@ -262,7 +264,8 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
     let closestSlide = null;
     let closestDistance = Infinity;
 
-    sliderEl.querySelectorAll('.team_slide').forEach((slide) => {
+    // slider.slides = Keen's own canonical slide list, real elements only, no loop clones
+    slider.slides.forEach((slide) => {
       const slideRect = slide.getBoundingClientRect();
       const distance = Math.abs(slideRect.left - containerLeft);
 
@@ -272,24 +275,48 @@ document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
       }
     });
 
-    sliderEl.querySelectorAll('.team_slide').forEach((slide) => {
+    slider.slides.forEach((slide) => {
       slide.classList.toggle('is_active', slide === closestSlide);
     });
   };
 
   const slider = new KeenSlider(sliderEl, {
+    ...options,
+    slideChanged: updateActive,
+    detailsChanged: updateActive
+  });
+
+  updateActive();
+
+  const prevBtn = wrapper.querySelector('[data-slider-nav="prev"]');
+  const nextBtn = wrapper.querySelector('[data-slider-nav="next"]');
+
+  prevBtn?.addEventListener('click', () => slider.prev());
+  nextBtn?.addEventListener('click', () => slider.next());
+}
+
+document.querySelectorAll('[data-team-slider]').forEach((sliderEl) => {
+  initKeenSlider(sliderEl, '.team_slide', {
     loop: true,
     centered: true,
     slides: { perView: 1.2, spacing: 0 },
     breakpoints: {
       '(min-width: 768px)': { slides: { perView: 1.6, spacing: 0 } },
       '(min-width: 1280px)': { slides: { perView: 2.6, spacing: 0 } }
-    },
-    slideChanged: updateActive,
-    detailsChanged: updateActive
+    }
   });
+});
 
-  updateActive();
+document.querySelectorAll('[data-project-slider]').forEach((sliderEl) => {
+  initKeenSlider(sliderEl, '.project_slide', {
+    loop: false,
+    centered: true,
+    slides: { perView: 1.5, spacing: 0 },
+    breakpoints: {
+      '(min-width: 768px)': { slides: { perView: 2.4, spacing: 0 } },
+      '(min-width: 1280px)': { slides: { perView: 2.8, spacing: 0 } }
+    }
+  });
 });
 
 function initDynamicTextCursor() {
@@ -340,42 +367,4 @@ function initDynamicTextCursor() {
 // Initialize Dynamic Text Cursor 
 document.addEventListener("DOMContentLoaded", () => {
   initDynamicTextCursor();
-});
-
-document.querySelectorAll('[data-project-slider]').forEach((sliderEl) => {
-  const updateActive = () => {
-    const containerRect = sliderEl.getBoundingClientRect();
-    const containerLeft = containerRect.left;
-
-    let closestSlide = null;
-    let closestDistance = Infinity;
-
-    sliderEl.querySelectorAll('.project_slide').forEach((slide) => {
-      const slideRect = slide.getBoundingClientRect();
-      const distance = Math.abs(slideRect.left - containerLeft);
-
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestSlide = slide;
-      }
-    });
-
-    sliderEl.querySelectorAll('.project_slide').forEach((slide) => {
-      slide.classList.toggle('is_active', slide === closestSlide);
-    });
-  };
-
-  const slider = new KeenSlider(sliderEl, {
-    loop: false,
-    centered: true,
-    slides: { perView: 1.5, spacing: 0 },
-    breakpoints: {
-      '(min-width: 768px)': { slides: { perView: 2.4, spacing: 0 } },
-      '(min-width: 1280px)': { slides: { perView: 2.8, spacing: 0 } }
-    },
-    slideChanged: updateActive,
-    detailsChanged: updateActive
-  });
-
-  updateActive();
 });
