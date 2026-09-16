@@ -341,3 +341,41 @@ function initDynamicTextCursor() {
 document.addEventListener("DOMContentLoaded", () => {
   initDynamicTextCursor();
 });
+
+document.querySelectorAll('[data-project-slider]').forEach((sliderEl) => {
+  const updateActive = () => {
+    const containerRect = sliderEl.getBoundingClientRect();
+    const containerLeft = containerRect.left;
+
+    let closestSlide = null;
+    let closestDistance = Infinity;
+
+    sliderEl.querySelectorAll('.project_slide').forEach((slide) => {
+      const slideRect = slide.getBoundingClientRect();
+      const distance = Math.abs(slideRect.left - containerLeft);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestSlide = slide;
+      }
+    });
+
+    sliderEl.querySelectorAll('.project_slide').forEach((slide) => {
+      slide.classList.toggle('is_active', slide === closestSlide);
+    });
+  };
+
+  const slider = new KeenSlider(sliderEl, {
+    loop: true,
+    centered: true,
+    slides: { perView: 1.2, spacing: 0 },
+    breakpoints: {
+      '(min-width: 768px)': { slides: { perView: 1.6, spacing: 0 } },
+      '(min-width: 1280px)': { slides: { perView: 2.6, spacing: 0 } }
+    },
+    slideChanged: updateActive,
+    detailsChanged: updateActive
+  });
+
+  updateActive();
+});
